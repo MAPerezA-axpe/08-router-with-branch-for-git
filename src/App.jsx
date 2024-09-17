@@ -1,10 +1,15 @@
+import { lazy, Suspense } from 'react'
 import './App.css'
-import HomePage from './pages/Home'
-import AboutPage from './pages/About'
-import { Router } from './Router'
 import Error404 from './pages/Error404'
 import SearchPage from './pages/Search'
+import { Router } from './Router'
 import { Route } from './Route'
+
+//Hacemos un import dinámico del Home.jsx para importarlo cuando lo necesitemos
+const LazyHomePage = lazy(() => import('./pages/Home.jsx'))
+
+//Hacemos lo mismo con About.jsx
+const LazyAboutPage = lazy(() => import('./pages/About.jsx'))
 
 const appRoutes = [
   {
@@ -17,10 +22,12 @@ function App() {
   return (
     <>
       <main>
-        <Router routes={appRoutes} defaultComponent={Error404}>
-          <Route path='/' Component={HomePage} />
-          <Route path='/about' Component={AboutPage} />
-        </Router>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Router routes={appRoutes} defaultComponent={Error404}>
+            <Route path='/' Component={LazyHomePage} />
+            <Route path='/about' Component={LazyAboutPage} />
+          </Router>
+        </Suspense>
       </main>
     </>
   )
