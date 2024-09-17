@@ -4,6 +4,7 @@ import Error404 from './pages/Error404'
 import SearchPage from './pages/Search'
 import { Router } from './Router'
 import { Route } from './Route'
+import AboutPage from './pages/About.jsx'
 
 //Hacemos un import dinámico del Home.jsx para importarlo cuando lo necesitemos
 const LazyHomePage = lazy(() => import('./pages/Home.jsx'))
@@ -12,6 +13,10 @@ const LazyHomePage = lazy(() => import('./pages/Home.jsx'))
 const LazyAboutPage = lazy(() => import('./pages/About.jsx'))
 
 const appRoutes = [
+  {
+    path: '/:lang/about',
+    Component: AboutPage
+  },
   {
     path:'/search/:query',
     Component: SearchPage
